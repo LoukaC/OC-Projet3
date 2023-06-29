@@ -26,7 +26,6 @@ fetch("http://localhost:5678/api/works")
       galleryFigure.appendChild(imageProject);
       galleryFigure.appendChild(titleProject);
     }
-
 })
 
 
@@ -39,8 +38,9 @@ fetch("http://localhost:5678/api/categories")
 
     // Création de la balise button Tous + affectation du nom du filtre
     const buttonFilterTous = document.createElement("button");
-    buttonFilterTous.classList.add("buttonTous")
+    buttonFilterTous.setAttribute("id", "Tous");
     buttonFilterTous.innerText = "Tous";
+    buttonFilterTous.focus(); // présélection du button Tous
 
     // rattachement des elements créés au document HTML (selection de la balise parent + ajout des enfants)
     const sectionFilter = document.querySelector("section .filters");
@@ -53,21 +53,18 @@ fetch("http://localhost:5678/api/categories")
       // Création de la balise button + affectation du nom du filtre
       const buttonFilter = document.createElement("button");
       buttonFilter.innerText = categorie.name;
-      buttonFilter.setAttribute("id", categorie.name)
+      buttonFilter.setAttribute("id", categorie.name.substr(0,6))
       
-
       // rattachement des elements créés au document HTML (selection de la balise parent + ajout des enfants)
       const sectionFilter = document.querySelector("section .filters");
       sectionFilter.appendChild(buttonFilter);
-      
-      
-      
+    }
+  })
       //selection de la balise avec Id + ajout evenement au clic du filtrage des projets
       
       const buttonFilterObjects = document.getElementsById(categorie.name);
       buttonFilterObjects.addEventListener("click", function () {
-        const projetsfiltrees = projects.filter(function(project))
+        const projetsfiltrees = projects.filter(function(project){
         return project.category.name === categorie.name // va comparer la valeur de category.name de chaque projet à la valeur categorie.name, si valeurs identique alors le projet est affiché
-     })
-    }
-  })
+      })
+    })
