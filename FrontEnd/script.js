@@ -1,70 +1,85 @@
-// Récupération des projets des travaux via API/works + réponse mise au format json
+var projectsData; // Variable pour stocker les projets
+  
+// Récupération des projets des travaux via API/works + réponse mise au format JSON
 fetch("http://localhost:5678/api/works")
-  .then((reponse) => reponse.json())
-  //.then((reponse2) => console.log(reponse2))
+  .then((response) => response.json())
   .then((projects) => {
+     projectsData = projects; // Stockage des projets dans la variable
+     afficherProjets(projectsData); // Afficher tous les projets initialement
+    });
 
-    for (let i = 0; i < projects.length; i++) {
-      // Création de la constante projet contenant la liste des projets
-      const project = projects[i];
+// Récupération des catégories via API/categories + réponse mise au format JSON
+fetch("http://localhost:5678/api/categories")
+  .then((response) => response.json())
+  .then((categories) => {
+    const sectionFilter = document.querySelector("section .filters")
+    // Création du bouton "Tous" et ajout de la classe "active"
 
-      // Création de la balise figure
+      const buttonFilterTous = document.createElement("button");
+      buttonFilterTous.setAttribute("id", "Tous");
+      buttonFilterTous.innerText = "Tous";
+      buttonFilterTous.classList.add("active"); // Ajout de la classe "active" pour pré-sélectionner le bouton "Tous"
+      sectionFilter.appendChild(buttonFilterTous);
+
+
+    // Création des boutons de filtre pour chaque catégorie
+      categories.forEach((category) => {
+        const buttonFilter = document.createElement("button");
+        buttonFilter.innerText = category.name;
+        buttonFilter.setAttribute("id", category.name.substr(0, 6));
+        sectionFilter.appendChild(buttonFilter);
+
+        // Gestion du clic sur les boutons de filtre
+        buttonFilter.addEventListener("click", () => {
+        const filterButtons = sectionFilter.querySelectorAll("button");
+        filterButtons.forEach((btn) => btn.classList.remove("active")); // Supprimer la classe "active" de tous les boutons de filtre
+        buttonFilter.classList.add("active"); // Ajouter la classe "active" au bouton de filtre cliqué
+
+        const filteredProjects = filterProjectsByCategory(category.name); // Filtrer les projets par catégorie
+
+        afficherProjets(filteredProjects); //afficher les projets filtrés
+      });
+    });
+    // Gestion du clic sur le bouton "Tous"
+    buttonFilterTous.addEventListener("click", () => {
+      const filterButtons = sectionFilter.querySelectorAll("button");
+        filterButtons.forEach((btn) => btn.classList.remove("active")); // Supprimer la classe "active" de tous les boutons de filtre
+        buttonFilterTous.classList.add("active"); // Ajouter la classe "active" au bouton "Tous"
+        afficherProjets(projectsData); // Afficher tous les projets
+    });
+  });
+
+
+// Fonction pour filtrer les projets par catégorie
+function filterProjectsByCategory(categoryName) {
+  if (categoryName === "Tous") {
+    return projectsData; // Retourne tous les projets si la catégorie est "Tous"
+  } else {
+    return projectsData.filter(
+      (project) => project.category.name === categoryName // Retourne les projets correspondant à la catégorie spécifiée
+    );
+  }
+}
+
+
+// Fonction pour afficher les projets dans la galerie
+function afficherProjets(projects) {
+  const sectionGallery = document.querySelector("section .gallery"); // selection de la balise parent
+
+    sectionGallery.innerHTML = ""; // Effacer les projets actuellement affichés
+    // Parcourir les projets et créer les éléments HTML correspondants
+    projects.forEach((project) => {
       const galleryFigure = document.createElement("figure");
-
-      // Création de la balise image + affectation du lien au src de la balise img
       const imageProject = document.createElement("img");
-      imageProject.src = project.imageUrl;
-      imageProject.alt = project.title;
-
-      // Création de la balise p + affectation du titre des projets
       const titleProject = document.createElement("figcaption");
-      titleProject.innerText = project.title;
 
-      // rattachement des elements créés au document HTML (selection de la balise parent + ajout des enfants)
-      const sectionGallery = document.querySelector("section .gallery");
+      imageProject.src = project.imageUrl; // Définir l'URL de l'image
+      imageProject.alt = project.title; // Définir l'attribut alt de l'image
+      titleProject.innerText = project.title; // Définir le texte du titre du projet
+
+      // rattachement des elements créés au document HTML (ajout des enfants)
       sectionGallery.appendChild(galleryFigure);
       galleryFigure.appendChild(imageProject);
       galleryFigure.appendChild(titleProject);
-    }
-})
-
-
-
-// Récupération des catégories via API/works + réponse mise au format json
-fetch("http://localhost:5678/api/categories")
-  .then((reponse) => reponse.json())
-  //.then((reponse2) => console.log(reponse2))
-  .then((categories) => {
-
-    // Création de la balise button Tous + affectation du nom du filtre
-    const buttonFilterTous = document.createElement("button");
-    buttonFilterTous.setAttribute("id", "Tous");
-    buttonFilterTous.innerText = "Tous";
-    buttonFilterTous.focus(); // présélection du button Tous
-
-    // rattachement des elements créés au document HTML (selection de la balise parent + ajout des enfants)
-    const sectionFilter = document.querySelector("section .filters");
-    sectionFilter.appendChild(buttonFilterTous);
-
-    for (let i = 0; i < categories.length; i++) {
-      // Création de la constante categorie contenant la liste des catégories des projets
-      const categorie = categories[i];
-
-      // Création de la balise button + affectation du nom du filtre
-      const buttonFilter = document.createElement("button");
-      buttonFilter.innerText = categorie.name;
-      buttonFilter.setAttribute("id", categorie.name.substr(0,6))
-      
-      // rattachement des elements créés au document HTML (selection de la balise parent + ajout des enfants)
-      const sectionFilter = document.querySelector("section .filters");
-      sectionFilter.appendChild(buttonFilter);
-    }
-  })
-      //selection de la balise avec Id + ajout evenement au clic du filtrage des projets
-      
-      const buttonFilterObjects = document.getElementsById(categorie.name);
-      buttonFilterObjects.addEventListener("click", function () {
-        const projetsfiltrees = projects.filter(function(project){
-        return project.category.name === categorie.name // va comparer la valeur de category.name de chaque projet à la valeur categorie.name, si valeurs identique alors le projet est affiché
-      })
-    })
+    });
+}

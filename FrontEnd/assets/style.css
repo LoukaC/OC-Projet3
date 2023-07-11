@@ -242,16 +242,13 @@ button {
 	width: 304px;
 }
 
-#Tous:focus, #Objets:focus, #Appart:focus, #Hotels:focus
+#Tous:focus, #Objets:focus, #Appart:focus, #Hotels:focus, #Tous.active
 {
 	background-color: #1D6154;
 	color: white;
 }
 
-.gallery {
-	margin-left: ;
-}
 a {
-	text-decoration:none;
 	color: black;
+	text-align: center;
 }

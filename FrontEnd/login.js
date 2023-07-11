@@ -1,7 +1,7 @@
-export function ajoutListenerLogin() {
+async function ajoutListenerLogin() {
   const formulaireLogin = document.querySelector(".formulaire-login");
   formulaireLogin.addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // bloquer le comportement le changement d 'URL et chargementde la page. la communication avec le serveur est gérer par fetch
 
     // Création de l’objet du nouveau login, récupération valeur email et mot de passe
     const login = {
@@ -13,13 +13,34 @@ export function ajoutListenerLogin() {
     const chargeUtile = JSON.stringify(login);
 
     // Appel de la fonction fetch avec toutes les informations nécessaires
-    function login() {
+    function loginRequest() {
       fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         body: chargeUtile,
-        headers: { "content-Type": "apllication/json" }
-      });
+        headers: { "content-Type": "application/json" }
+      })
+      .then(response => response.json())
+      .then(data => {
+
+        // Vérification de la réponse de l'API
+        if (data.userId && data.token) {
+            // Connexion réussie
+            // Stockage de l'identifiant utilisateur et du token dans le navigateur 
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("token", data.token);
+            // Redirection vers la page d'accueil ou une autre page
+            window.location.href = "index.html";
+        }
+        else {
+            // si connexion échouée Afficher d'un message d'erreur
+            console.error("User not found");
+        }
+      })
     }
-  });
+    
+    loginRequest();
+
+  })
 }
 
+ajoutListenerLogin();
