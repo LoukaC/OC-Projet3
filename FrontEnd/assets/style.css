@@ -82,7 +82,9 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+	display: flex;
+	align-items: center;
 }
 nav ul {
 	display: flex;
@@ -251,4 +253,115 @@ button {
 a {
 	color: black;
 	text-align: center;
+	text-decoration: none;
+}
+
+#indroduction figure div{
+	margin-left: 56.75px;
+}
+
+#portfolio h2{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 40px;
+	align-items: center;
+}
+#portfolio h2 div{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.modifyProject {
+	display: flex;
+	gap: 6px;
+	font-size: 14px;
+}
+
+.modifyProject .modifyText {
+  font-weight: normal;
+  font-family: 'Work Sans' ;
+}
+
+
+#introduction figure {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#introduction figure div {
+margin-left: 56.75px;
+}
+
+body .edit {
+	background-color: black;
+	padding: 10px 0px;
+	margin: 0px -1000px;
+	display: flex;
+	justify-content: center;
+}
+
+body .edit a {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+body .edition {
+	color: white;
+}
+
+.publish{
+	border: solid 1px white;
+	border-radius: 20px;
+	background-color: white;
+	color: black;
+	padding: 10px;
+}
+
+
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-wrapper{
+	overflow: auto;
+	background-color: white;
+	width: 630px;
+	height: 731px;
+	padding: 20px;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.fa-xmark{
+	display: flex;
+	justify-content: flex-end;
+}
+
+h3{
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 30.5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#deleteGalerie{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }

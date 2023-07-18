@@ -82,4 +82,109 @@ function afficherProjets(projects) {
       galleryFigure.appendChild(imageProject);
       galleryFigure.appendChild(titleProject);
     });
+  }
+
+
+  
+  //
+
+
+// Vérifier si l'utilisateur est connecté, si connecté :
+if (localStorage.getItem("token")) {
+  // remplacement du lien login par le lien logout
+  const loginLink = document.querySelector("nav ul li:nth-child(3) a");
+  loginLink.textContent = "Logout";
+
+  // Ajout d'un gestionnaire d'événements pour le clic sur le lien Logout
+  loginLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Bloquer le comportement de redirection par défaut
+
+    // Supprimer les données du localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+
+    // Rediriger vers la page de connexion ou une autre page
+    window.location.href = "index.html";
+  });
+
+  // ne plus afficher les filtres
+  const sectionFilter = document.querySelector("section .filters");
+  sectionFilter.style.display = "none";
+
+  // création du bouton pour modifier les projets pour ouvrir la modale
+  const modifyProject = document.querySelector("#portfolio h2");
+  const editButton = document.createElement("div");
+  editButton.innerHTML = `
+    <a href="#modal1" class="modifyProject modal-link">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <span class="modifyText">modifier</span>
+    </a>
+  `;
+  modifyProject.appendChild(editButton);
+
+  // création du bouton pour modifier en dessous de l'image de profil
+  const modifyProject1 = document.querySelector("#introduction figure");
+  const editButton1 = document.createElement("div");
+  editButton1.innerHTML = `
+    <a href="#modal2" class="modifyProfil">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <span class="modifyText">modifier</span>
+    </a>
+  `;
+  modifyProject1.appendChild(editButton1);
+
+  // création du mode édition et du bouton publier les changements
+  const body = document.querySelector("body");
+  const editButton2 = document.createElement("div");
+  editButton2.classList.add("edit");
+  editButton2.innerHTML = `
+    <a href="#modal" class="edition">
+    <span>  
+    <i class="fa-regular fa-pen-to-square"></i>
+      Mode édition
+      </span>
+      <span class="publish"> publier les changements </span>
+    </a>
+  `;
+  body.insertBefore(editButton2, body.firstChild);
 }
+
+
+  ///modale
+
+  let modal = null;
+  const openModal = function(e) {
+    e.preventDefault() // le clic sur le lien  ne fonctionne pas normalement
+    const target = document.querySelector(this.getAttribute("href"))
+    target.style.display = null //affichage de la modale
+    target.removeAttribute("aria-hidden") // la modale redevient visible
+    target.setAttribute("aria-modal", "true") // contenu consutable
+    modal = target
+    modal.addEventListener("click", closeModal)
+    modal.querySelector(".close-modal").addEventListener("click", closeModal);
+    modal.querySelector(".stop-modal").addEventListener("click", stopPropagation);
+  }
+
+const closeModal= function(e){
+  if (modal === null) return
+  e.preventDefault();
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
+  modal.removeAttribute("aria-modal");
+  modal.removeEventListener("click", closeModal)
+  modal.querySelector(".close-modal").addEventListener("click", closeModal);
+  modal.querySelector(".stop-modal").removeEventListener("click", stopPropagation);
+  modal = null
+}
+
+const stopPropagation = function (e) { // empecher la propagation de l'evenement dans les elements parents, empeche le close modal lors du clic dans la modale
+  e.stopPropagation()
+}
+
+document.querySelectorAll(".modal-link").forEach(a => { // pour chaque click appliquer la fonction openModal
+  a.addEventListener("click", openModal)
+})
+
+
+
+

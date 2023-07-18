@@ -24,17 +24,21 @@ async function ajoutListenerLogin() {
 
         // Vérification de la réponse de l'API
         if (data.userId && data.token) {
-            // Connexion réussie
-            // Stockage de l'identifiant utilisateur et du token dans le navigateur 
-            localStorage.setItem("userId", data.userId);
-            localStorage.setItem("token", data.token);
-            // Redirection vers la page d'accueil ou une autre page
-            window.location.href = "index.html";
+          // Connexion réussie
+          // Stockage de l'identifiant utilisateur et du token dans le navigateur
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("token", data.token);
+          // Redirection vers la page d'accueil ou une autre page
+          window.location.href = "index.html";
+        } 
+        else if (data.status === "404") {
+          alert(data.message);
+
+        } 
+        else if (data.status === "401") {
+          alert(data.message);
         }
-        else {
-            // si connexion échouée Afficher d'un message d'erreur
-            console.error("User not found");
-        }
+
       })
     }
     
@@ -42,5 +46,6 @@ async function ajoutListenerLogin() {
 
   })
 }
+
 
 ajoutListenerLogin();
