@@ -43,11 +43,29 @@
 			<div class="modal-wrapper stop-modal">
 				<span><i class="fa-solid fa-xmark close-modal"></i></span>
 				<h3 id="titlemodal1">Galerie photo</h3>
-				<p>zdfzffdsfsfsfs</p>
+				<div class="afficherProjetsModal"></div>
+				<hr>
 				<input type="submit" value="Ajouter une photo">
 				<p id="deleteGalerie">Supprimer la galerie</p>
 			</div>
+			<div class="modal-wrapper-add-picture stop-modal" style="display:none;">
+				<div id="bloc-buton">
+					<i class="fa-regular fa-arrow-left"></i>
+					<i class="fa-solid fa-xmark close-modal"></i>
+				</div>
+				<h3>Ajour photo</h3>
+				<div class="bloc-add-pictures">
+					<input type="submit" value="+ Ajouter photo">
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<label for="titre">Titre</label>
+				<input type="text" name="titre" id="titre">
 
+				<label for="categorie">Titre</label>
+				<input type="text" name="categorie" id="categorie">
+
+				<input type="submit" value="Valider">
+			</div>
 		</aside>
 		<div class="filters">
 		</div>

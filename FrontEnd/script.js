@@ -186,5 +186,83 @@ document.querySelectorAll(".modal-link").forEach(a => { // pour chaque click app
 })
 
 
+// Récupération des projets des travaux via API/works + réponse mise au format JSON
+fetch("http://localhost:5678/api/works")
+  .then((response) => response.json())
+  .then((projectsModal) => {
+    // Stockage des projets dans la variable
+    afficherProjetsModal(projectsModal); // Afficher tous les projets initialement
+
+    // Fonction pour afficher les projets dans la galerie dans la modale
+    function afficherProjetsModal(projectsModal) {
+      const divModal = document.querySelector("div.modal-wrapper .afficherProjetsModal"); // sélection de la balise parent
+
+      divModal.innerHTML = ""; // Effacer les projets actuellement affichés
+      // Parcourir les projets et créer les éléments HTML correspondants
+      projectsModal.forEach((project) => {
+        const divModalFigure = document.createElement("figure");
+        const imageProject = document.createElement("img");
+        const titleProject = document.createElement("p");
+        const butonDelete = document.createElement("i");
+        const editIcon = document.createElement("i");
+
+        imageProject.src = project.imageUrl; // Définir l'URL de l'image
+        imageProject.alt = project.title; // Définir l'attribut alt de l'image
+        titleProject.innerText = "éditer";
+        butonDelete.className = "fa-solid fa-trash-can";
+        editIcon.className = "fa-solid fa-arrows-up-down-left-right";
+        editIcon.style.display = "none"; // Masquer l'icône par défaut
+
+        // rattachement des elements créés au document HTML (ajout des enfants)
+        divModal.appendChild(divModalFigure);
+        divModalFigure.appendChild(imageProject);
+        divModalFigure.appendChild(titleProject);
+        divModalFigure.appendChild(butonDelete);
+        divModalFigure.appendChild(editIcon);
+
+        divModalFigure.addEventListener("mouseover", function () {
+          editIcon.style.display = "flex"; // Afficher l'icône lors du passage de la souris
+        });
+
+        divModalFigure.addEventListener("mouseout", function () {
+          editIcon.style.display = "none"; // Masquer l'icône lorsque la souris quitte l'élément
+        });
+
+        // supprimer les travaux avec la requete delete
+        butonDelete.addEventListener("click", () => {
+          deleteProject(project.id);
+        });
+      });
+    }
+  });
+
+// Fonction pour supprimer un projet
+function deleteProject(projectId) {
+
+  const token = window.localStorage.getItem("token");
+
+  fetch(`http://localhost:5678/api/works/${projectId}`, {
+    method: "DELETE",
+    headers: {
+      accept: "application/json",
+      Authorization: `bearer ${token}`,
+    }
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Projet supprimé");
+        // Mettre à jour la liste des projets dans la modale (appeler à nouveau la fonction afficherProjetsModal)
+        fetch("http://localhost:5678/api/works")
+          .then((response) => response.json())
+          .then((projectsModal) => {
+            afficherProjets(projectsModal);
+          });
+      } else {
+        console.log("Erreur lors de la suppression du projet");
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
 
 

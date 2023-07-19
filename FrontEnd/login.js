@@ -31,11 +31,10 @@ async function ajoutListenerLogin() {
           // Redirection vers la page d'accueil ou une autre page
           window.location.href = "index.html";
         } 
-        else if (data.status === "404") {
+        else if (data.status === 404) {
           alert(data.message);
-
         } 
-        else if (data.status === "401") {
+        else if (data.status === 401) {
           alert(data.message);
         }
 

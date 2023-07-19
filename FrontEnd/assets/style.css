@@ -340,15 +340,21 @@ body .edition {
 	background-color: white;
 	width: 630px;
 	height: 731px;
-	padding: 20px;
-	border-radius: 20px;
+	padding: 30px;
+	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+}
+
+.modal-wrapper span{
+	margin-left: auto;
 }
 
 .fa-xmark{
-	display: flex;
-	justify-content: flex-end;
+	font-size: 20px;
 }
 
 h3{
@@ -359,9 +365,69 @@ h3{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-bottom: 20px;
 }
+
 #deleteGalerie{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+}
+
+.afficherProjetsModal{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
+	width: 430px;
+	height: 500px;
+	gap: 0px;
+}
+
+ .fa-trash-can{
+	position: absolute;
+	top: 5px;
+	left: 55px;
+
+}
+
+.fa-arrows-up-down-left-right{
+	position: absolute;
+	top: 5px;
+	left: 35px 
+}
+
+.afficherProjetsModal figure {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.afficherProjetsModal figure img {
+  width: 100%;
+  object-fit: cover;
+  height: 102.57px;
+  width: 76.61px;
+}
+
+.afficherProjetsModal figure p {
+  margin-top: 5px;
+}
+
+.afficherProjetsModal figure i {
+  font-size: 10px;
+  color: white;
+  background-color: black;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+}
+
+hr {
+	color: #1D6154;
+    width: 430px;
+	height: 0px;
 }
