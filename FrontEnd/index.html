@@ -39,32 +39,43 @@
 	<section id="portfolio">
 		<h2>Mes projets</h2>
 		 <!-- modale -->
-		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display:none;" aria-labelledby="titlemodal1">
-			<div class="modal-wrapper stop-modal">
-				<span><i class="fa-solid fa-xmark close-modal"></i></span>
-				<h3 id="titlemodal1">Galerie photo</h3>
-				<div class="afficherProjetsModal"></div>
-				<hr>
-				<input type="submit" value="Ajouter une photo">
-				<p id="deleteGalerie">Supprimer la galerie</p>
-			</div>
-			<div class="modal-wrapper-add-picture stop-modal" style="display:none;">
-				<div id="bloc-buton">
-					<i class="fa-regular fa-arrow-left"></i>
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display:none;">
+			<div class="modal-wrapper stop-modal js-modal-wrapper">
+				<div class="xmark">
 					<i class="fa-solid fa-xmark close-modal"></i>
 				</div>
-				<h3>Ajour photo</h3>
-				<div class="bloc-add-pictures">
-					<input type="submit" value="+ Ajouter photo">
-					<p>jpg, png : 4mo max</p>
+				<h3>Galerie photo</h3>
+				<div class="afficherProjetsModal"></div>
+				<hr>
+				<input type="submit" value="Ajouter une photo" id="add-picture">
+				<p id="deleteGalerie">Supprimer la galerie</p>
+			</div>
+			<div class="js-modal-wrapper-add-picture stop-modal modal-wrapper" style="display:none;">
+				<div class="arrow-xmark">
+					<i class="fa-solid fa-arrow-left"></i>
+					<i class="fa-solid fa-xmark close-modal"></i>
 				</div>
-				<label for="titre">Titre</label>
-				<input type="text" name="titre" id="titre">
-
-				<label for="categorie">Titre</label>
-				<input type="text" name="categorie" id="categorie">
-
-				<input type="submit" value="Valider">
+				<h3>Ajout photo</h3>
+				<form action="#" method="post" class="bloc-add-pictures">
+					<div class="addpicture">
+						<i class="fa-regular fa-image"></i>
+						<label for="addpicture">+ Ajouter photo</label>
+						<input type="file" value="+ Ajouter photo" id="addpicture">
+						<img id="imagePreview" src="#" alt="Image Preview">
+						<p>jpg, png : 4mo max</p>
+					</div>
+					<label class="label-form" for="titre">Titre</label>
+					<input type="text" name="titre" id="titre">
+					<label class="label-form" for="categorie">Catégorie</label>
+					<select type="text" name="categorie" id="categorie">
+						<option value="" disabled selected hidden></option>
+						<option value="1">Objets</option>
+						<option value="2">Appartements</option>
+						<option value="3">Hotels & restaurants</option>
+					</select>
+					<input type="submit" value="Valider">
+				</form>
+				<hr>
 			</div>
 		</aside>
 		<div class="filters">
