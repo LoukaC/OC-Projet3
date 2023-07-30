@@ -39,7 +39,7 @@
 	<section id="portfolio">
 		<h2>Mes projets</h2>
 		 <!-- modale -->
-		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display:none;">
+		<aside id="modal1" class="modal" aria-hidden="true" style="display:none;">
 			<div class="modal-wrapper stop-modal js-modal-wrapper">
 				<div class="xmark">
 					<i class="fa-solid fa-xmark close-modal"></i>
@@ -60,15 +60,15 @@
 					<div class="addpicture">
 						<i class="fa-regular fa-image"></i>
 						<label for="addpicture">+ Ajouter photo</label>
-						<input type="file" value="+ Ajouter photo" id="addpicture">
+						<input type="file" id="addpicture">
 						<img id="imagePreview" src="#" alt="Image Preview">
 						<p>jpg, png : 4mo max</p>
 					</div>
 					<label class="label-form" for="titre">Titre</label>
 					<input type="text" name="titre" id="titre">
 					<label class="label-form" for="categorie">Catégorie</label>
-					<select type="text" name="categorie" id="categorie">
-						<option value="" disabled selected hidden></option>
+					<select name="categorie" id="categorie">
+						<option value="" disabled selected hidden label="#"></option>
 						<option value="1">Objets</option>
 						<option value="2">Appartements</option>
 						<option value="3">Hotels & restaurants</option>
