@@ -19,8 +19,8 @@ async function ajoutListenerLogin() {
         body: chargeUtile,
         headers: { "content-Type": "application/json" }
       })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json()
+      .then((data) => {
 
         // Vérification de la réponse de l'API
         if (data.userId && data.token) {
@@ -31,14 +31,15 @@ async function ajoutListenerLogin() {
           // Redirection vers la page d'accueil ou une autre page
           window.location.href = "index.html";
         } 
-        else if (data.status === 404) {
+        else if (response.status === 404) {
           alert(data.message);
         } 
-        else if (data.status === 401) {
-          alert(data.message);
+        else if (response.status === 401) {
+          alert("Not Authorized");
         }
 
       })
+      )
     }
     
     loginRequest();
