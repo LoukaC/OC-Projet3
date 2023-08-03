@@ -31,14 +31,14 @@ async function ajoutListenerLogin() {
           // Redirection vers la page d'accueil ou une autre page
           window.location.href = "index.html";
         } 
-        else if (response.status === 404) {
-          alert(data.message);
+        else if (response.status === 404) { // va chercher le status 404 de la reponse
+          alert(data.message); // afficher le message du data en json
         } 
         else if (response.status === 401) {
           alert("Not Authorized");
         }
-
       })
+      
       )
     }
     
