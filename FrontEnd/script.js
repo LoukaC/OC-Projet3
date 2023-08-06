@@ -127,7 +127,7 @@ if (localStorage.getItem("token")) {
   `;
   modifyProject1.appendChild(editButton1);
 
-  // création du mode édition et du bouton publier les changements
+  // création du mode édition et publier les changements
   const body = document.querySelector("body");
   const editButton2 = document.createElement("div");
   editButton2.classList.add("edit");
@@ -143,21 +143,22 @@ if (localStorage.getItem("token")) {
   body.insertBefore(editButton2, body.firstChild);
 }
 
-///modale
+// ouverture modale
 
 let modal = null;
 const openModal = function (e) {
-  e.preventDefault(); // le clic sur le lien  ne fonctionne pas normalement
+  e.preventDefault(); // le clic sur le lien ne fonctionne pas normalement
   const target = document.querySelector(this.getAttribute("href"));
   target.style.display = null; //affichage de la modale
   target.removeAttribute("aria-hidden"); // la modale redevient visible
-  target.setAttribute("aria-modal", "true"); // contenu consutable
+  target.setAttribute("aria-modal", "true"); // contenu derriere modale non interactif
   modal = target;
   modal.addEventListener("click", closeModal);
   modal.querySelector(".close-modal").addEventListener("click", closeModal);
   modal.querySelector(".stop-modal").addEventListener("click", stopPropagation);
 };
 
+//fermeture modale
 const closeModal = function (e) {
   if (modal === null) return;
   e.preventDefault();
@@ -165,10 +166,8 @@ const closeModal = function (e) {
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
   modal.removeEventListener("click", closeModal);
-  modal.querySelector(".close-modal").addEventListener("click", closeModal);
-  modal
-    .querySelector(".stop-modal")
-    .removeEventListener("click", stopPropagation);
+  modal.querySelector(".close-modal").removeEventListener("click", closeModal);
+  modal.querySelector(".stop-modal").removeEventListener("click", stopPropagation);
   modal = null;
 };
 
@@ -182,7 +181,7 @@ document.querySelectorAll(".modal-link").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-// Récupération des projets des travaux via API/works + réponse mise au format JSON
+// Afficher les projets dans la modale. Récupération des projets des travaux via API/works + réponse mise au format JSON
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((projectsModal) => {
@@ -192,9 +191,7 @@ fetch("http://localhost:5678/api/works")
 
 // Fonction pour afficher les projets dans la galerie dans la modale
 function afficherProjetsModal(projectsModal) {
-  const divModal = document.querySelector(
-    "div.modal-wrapper .afficherProjetsModal"
-  ); // sélection de la balise parent
+  const divModal = document.querySelector("div.modal-wrapper .afficherProjetsModal"); // sélection de la balise parent
 
   divModal.innerHTML = ""; // Effacer les projets actuellement affichés
   // Parcourir les projets et créer les éléments HTML correspondants
@@ -283,7 +280,7 @@ const returnToFirstModal = function () {
   modalWrapper.style.display = "flex"; // Afficher la première modale
 };
 
-// retour à la 1ere modale lors du clic sur l icone fleche-retour
+// retour à la 1ere modale lors du clic sur l'icone fleche-retour
 const buttonReturn = document.getElementById("return");
 buttonReturn.addEventListener("click", (e) => {
   returnToFirstModal();
@@ -311,7 +308,7 @@ const submitButton = document.querySelector(
 function checkFormValidity() {
   // Vérifiez si toutes les conditions sont remplies
   const isImageSelected = input.files.length > 0; // selection d'une image
-  const isTitleFilled = titleInput.value.trim() !== ""; // remplissage du titre
+  const isTitleFilled = titleInput.value !== ""; // remplissage du titre
   const isCategoryChosen = categoryInput.value !== ""; // remplissage de la catégorie
 
 
@@ -365,7 +362,7 @@ input.addEventListener("change", function (e) {
     icon.style.display = "block";
     paragraph.style.display = "block";
 
-    checkFormValidity(); // Vérifiez la validité du formulaire si l'image est désélectionnée
+    checkFormValidity(); // Vérifiez la validité du formulaire si pas d'image
   }
 
   // Appelez la fonction checkFormValidity() après le chargement d'une image
